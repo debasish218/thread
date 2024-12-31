@@ -1,0 +1,24 @@
+{% load extra %}
+{% load thumbnail %}
+{% if u.myuser.profile_picture %}
+    <a href="{% url 'accounts:profile' u.username %}" class="avatar">
+        <div class="w-10 sm:w-14 rounded-full">
+            {% thumbnail u.myuser.profile_picture '80' as im %}
+                <img src="{{ im.url }}"
+                     srcset="{% thumbnail u.myuser.profile_picture '70' as im %}  {{ im.url }} {{ im.x }}w{% endthumbnail %}"
+                     alt="Profile picture of {{ u.username }}"
+                     sizes="100vw"
+                     width="{{ im.width }}"
+                     height="{{ im.height }}"
+                     class="w-full" />
+            {% endthumbnail %}
+        </div>
+    </a>
+{% else %}
+    <a href="{% url 'accounts:profile' u.username %}"
+       class="avatar placeholder">
+        <div class="bg-neutral-focus text-neutral-content rounded-full w-10 sm:w-14">
+            <span class="text-xs uppercase sm:text-base">{{ u.username|ecut }}</span>
+        </div>
+    </a>
+{% endif %}

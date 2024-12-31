@@ -1,0 +1,16 @@
+{% load thumbnail %}
+<div class="carousel carousel-center min-w-full p-4 pl-12 -ml-12 space-x-2 sm:space-x-4 bg-white rounded-box">
+    {% for comment_image in cmt.comment_image.all %}
+        <div class="carousel-item z-10">
+            {% thumbnail comment_image.image '500' as im %}
+                <img src="{{ im.url }}"
+                     srcset="{% thumbnail comment_image.image '300' as im %}  {{ im.url }} {{ im.x }}w{% endthumbnail %}"
+                     alt="comment image of thread by {{ cmt.user.username }}"
+                     sizes="100vw"
+                     width="{{ im.width }}"
+                     height="{{ im.height }}"
+                     class="rounded-box w-auto max-h-[12rem] sm:max-h-80 object-contain" />
+            {% endthumbnail %}
+        </div>
+    {% endfor %}
+</div>

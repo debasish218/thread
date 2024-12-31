@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% include "thread/htmx/reply_page.html" with comment=comment %}
+{% endblock content %}
+{% block nav %}
+    <!-- Bottom Nav-->
+    {% include "partials/_nav.html" %}
+{% endblock nav %}

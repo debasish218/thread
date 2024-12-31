@@ -1,0 +1,16 @@
+<!-- More Feed -->
+{% for thread in threads %}
+    {% if forloop.last and threads.next_page_number %}
+        <div class="last-feed-item"
+             {% if following %} hx-get="{% url 'thread:following_feed' %}?page={{ threads.next_page_number }}" {% else %} hx-get="{% url 'thread:feed' %}?page={{ threads.next_page_number }}" {% endif %}
+             hx-trigger="intersect once"
+             hx-indicator="#feed-indicator"
+             hx-swap="afterend">{% include "thread/partials/_thread.html" with thread=thread %}</div>
+    {% elif forloop.last %}
+        <div>{% include "thread/partials/_thread.html" with thread=thread %}</div>
+    {% else %}
+        <div>{% include "thread/partials/_thread.html" with thread=thread %}</div>
+    {% endif %}
+{% empty %}
+    <div class="h-96 flex justify-center items-center">There is no feed yet.</div>
+{% endfor %}

@@ -1,0 +1,113 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Register</title>
+        <link rel="stylesheet" href="{% static 'css/build.css' %}">
+        <link rel="icon"
+              type="image/x-icon"
+              href="{% static 'img/web_logo01.png' %}">
+    </head>
+    <style>
+        body {
+            background-image: url('{% static "img/bg_login1.png" %}'); 
+            background-size: cover; 
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+    </style>
+    <body>
+        <div class="max-w-3xl mx-auto flex flex-col justify-center min-h-screen">
+             <div class="card max-w-xl bg-base-100 shadow-xl mx-3" style="margin-left: 60px;">
+                <div style="height: 140px;background-color: rgb(153, 135, 243); display: flex; justify-content: center; align-items: center; border-top-left-radius: 20px; border-top-right-radius: 20px;">
+                    <img style="height: 200px" src="{% static 'img/web_logo01.png' %}" alt="">
+                </div>  
+                <div class="card-body" style="color: black; background-color: rgb(194, 184, 228);border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; ">
+                    <h2 class="card-title justify-center" style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif ; font-size: 30px;">Register</h2>
+                    <form action="{% url 'accounts:register' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="form-control w-full">
+                            <label class="label">
+                                <span class="label-text" style="font-size: 20px; font-family: cursive;">{{ form.username.label }}</span>
+                            </label>
+                            <input type="text"
+                                   required
+                                   name="{{ form.username.html_name }}"
+                                   class="input input-bordered w-full" />
+                            {% if form.username.errors %}
+                                <label class="label">
+                                    {% for error in form.username.errors %}<span class="label-text-alt text-error">{{ error }}</span>{% endfor %}
+                                </label>
+                            {% endif %}
+                        </div>
+                        <div class="form-control w-full">
+                            <label class="label">
+                                <span class="label-text" style="font-size: 20px; font-family: cursive;"> {{ form.first_name.label }}</span>
+                            </label>
+                            <input type="text"
+                                   required
+                                   name="{{ form.first_name.html_name }}"
+                                   class="input input-bordered w-full" />
+                            {% if form.first_name.errors %}
+                                <label class="label">
+                                    {% for error in form.first_name.errors %}<span class="label-text-alt text-error">{{ error }}</span>{% endfor %}
+                                </label>
+                            {% endif %}
+                        </div>
+                        <div class="form-control w-full">
+                            <label class="label">
+                                <span class="label-text" style="font-size: 20px; font-family: cursive;">{{ form.last_name.label }}</span>
+                            </label>
+                            <input type="text"
+                                   required
+                                   name="{{ form.last_name.html_name }}"
+                                   class="input input-bordered w-full" />
+                            {% if form.last_name.errors %}
+                                <label class="label">
+                                    {% for error in form.last_name.errors %}<span class="label-text-alt text-error">{{ error }}</span>{% endfor %}
+                                </label>
+                            {% endif %}
+                        </div>
+                        <div class="form-control w-full">
+                            <label class="label">
+                                <span class="label-text"style="font-size: 20px; font-family: cursive;" >{{ form.email.label }}</span>
+                            </label>
+                            <input type="email" required name={{ form.email.html_name }} class="input input-bordered w-full" />
+                            {% if form.email.errors %}
+                                <label class="label">
+                                    {% for error in form.email.errors %}<span class="label-text-alt text-error">{{ error }}</span>{% endfor %}
+                                </label>
+                            {% endif %}
+                        </div>
+                        <div class="form-control w-full">
+                            <label class="label">
+                                <span class="label-text" style="font-size: 20px; font-family: cursive;">{{ form.password1.label }}</span>
+                            </label>
+                            <input type="password" required name={{ form.password1.html_name }} class="input input-bordered w-full" />
+                            {% if form.password1.errors %}
+                                <label class="label">
+                                    {% for error in form.password1.errors %}<span class="label-text-alt text-error">{{ error }}</span>{% endfor %}
+                                </label>
+                            {% endif %}
+                        </div>
+                        <div class="form-control w-full">
+                            <label class="label">
+                                <span class="label-text"style="font-size: 20px; font-family: cursive;" >{{ form.password2.label }}</span>
+                            </label>
+                            <input type="password" required name={{ form.password2.html_name }} class="input input-bordered w-full" />
+                            {% if form.password2.errors %}
+                                <label class="label">
+                                    {% for error in form.password2.errors %}<span class="label-text-alt text-error">{{ error }}</span>{% endfor %}
+                                </label>
+                            {% endif %}
+                        </div>
+                        <button type="submit" class="btn mt-3 w-full"  style=" color: white; font-weight: 600;font-size: 18px; background-color: rgb(153, 135, 243)">Register</button>
+                    </form>
+                    <a href="{% url 'accounts:login' %}" class="link" style="font-family: cursive; font-size: 17px; color: black;">Already have an account?</a>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

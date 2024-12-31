@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% include "thread/partials/_feed.html" with threads=threads %}
+{% endblock content %}
+{% block nav %}
+    <!-- Bottom Nav-->
+    {% include "partials/_nav.html" with home_active=True %}
+{% endblock nav %}

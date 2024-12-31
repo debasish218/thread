@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% include "thread/htmx/thread_page.html" with thread=thread direct_comments=direct_comments %}
+{% endblock content %}
+{% block nav %}
+    <!-- Bottom Nav-->
+    {% include "partials/_nav.html" %}
+{% endblock nav %}

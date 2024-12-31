@@ -1,0 +1,28 @@
+{% load extra %}
+{% load thumbnail %}
+<div class="avatar-group -space-x-2">
+    {% for cmt  in cmts %}
+        {% if forloop.counter <= 2 %}
+            {% if cmt.user.myuser.profile_picture %}
+                <div class="avatar">
+                    <div class="w-4 sm:w-6 rounded-full">
+                        {% thumbnail cmt.user.myuser.profile_picture '40' as im %}
+                            <img src="{{ im.url }}"
+                                 srcset="{% thumbnail cmt.user.myuser.profile_picture '30' as im %}  {{ im.url }} {{ im.x }}w{% endthumbnail %}"
+                                 alt="Profile picture of {{ cmt.user.username }}"
+                                 sizes="100vw"
+                                 width="{{ im.width }}"
+                                 height="{{ im.height }}" />
+                        {% endthumbnail %}
+                    </div>
+                </div>
+            {% else %}
+                <div class="avatar placeholder">
+                    <div class="bg-neutral-focus text-neutral-content rounded-full w-4 sm:w-6">
+                        <span class="text-xs uppercase sm:text-sm">{{ cmt.user.username|ecut }}</span>
+                    </div>
+                </div>
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+</div>

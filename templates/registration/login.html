@@ -1,0 +1,72 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{% static 'css/build.css' %}">
+        <link rel="icon"
+              type="image/x-icon"
+              href="{% static 'img/web_logo01.png' %}">
+        <title>Login</title>
+        <style>
+            body {
+                background-image: url('{% static "img/bg_login1.png" %}'); 
+                background-size: cover; 
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+            }
+        </style>
+    </head>
+    <body> 
+        <div class="max-w-3xl mx-auto flex flex-col justify-center min-h-screen">
+            <div class="card max-w-xl bg-base-100 shadow-xl mx-3" style="margin-left: 70px; " >
+                <div style="height: 140px;background-color: rgb(153, 135, 243); display: flex; justify-content: center; align-items: center; border-top-left-radius: 20px; border-top-right-radius: 20px;">
+                    <img style="height: 200px" src="{% static 'img/web_logo01.png' %}" alt="">
+                </div>
+                <div class="card-body" style="color: black; background-color: rgb(194, 184, 228);border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; ">
+                    <h1 class="card-title justify-center" style="font-size: 25px; font-family:'Times New Roman', Times; "><b>Log in to your Yo-Mi account</b></h1>
+                    {% if error %}<p class="text-error text-xs" style="color: rgb(220, 48, 48); font-size: 17px;">Your username and password didn't match. Please try again!</p>{% endif %}
+                    <form action="{% url 'accounts:login' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="form-control w-full">
+                            <label class="label">
+                                <span class="label-text" style="font-size: 20px; font-family: cursive;">{{ form.username.label }}</span>
+                            </label>
+                            <input type="text"
+                                   name="{{ form.username.html_name }}"
+                                   required
+                                   class="input input-bordered w-full" />
+                        </div>
+                        <div class="form-control w-full">
+                            <label class="label">
+                                <span class="label-text" style="font-size: 20px; font-family: cursive;"> {{ form.password.label }}</span>
+                            </label>
+                            <input type="password"
+                                   required
+                                   name="{{ form.password.html_name }}"
+                                   class="input input-bordered w-full" />
+                        </div>
+                        <!-- <button type="submit" class="btn mt-3" style="color: black; font-size: larger; font-family: 'Times New Roman', Times, serif;">Login</button> -->
+                        <div style="display: flex; justify-content: center; align-items: center;">
+                            <button type="submit" class="btn mt-3 w-full" style=" color: white; font-weight: 600;font-size: 18px; background-color: rgb(153, 135, 243)">Log in</button>
+                        </div>
+                    </form>
+                    <div class="flex flex-col items-start">
+                        <a href="{% url 'accounts:register' %}" class="link" style="font-size: 20px; font-family: cursive;">New here?</a>
+                        <button class="link" onclick="forget_pass.showModal()" style="font-size: 20px; font-family: cursive; ">Forget password?</button>
+                    </div>
+                    <dialog id="forget_pass" class="modal">
+                        <form method="dialog" class="modal-box">
+                            <h3 class="font-bold text-lg"></h3>
+                            <p class="py-4" style="color: black; font-family: Georgia, 'Times New Roman', Times, serif;">Keep calm and try to remember your password.</p>
+                        </form>
+                        <form method="dialog" class="modal-backdrop">
+                            <button>close</button>
+                        </form>
+                    </dialog>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

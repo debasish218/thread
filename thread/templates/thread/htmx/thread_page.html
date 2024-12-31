@@ -1,0 +1,16 @@
+<!-- Thread Page -->
+<div class="w-full pb-16">
+    <!-- Banner -->
+    <div class="flex bg-white border-b-2 justify-between px-3 py-4 sticky top-0 z-50">
+        <div class="text-center cursor-pointer"
+             onclick="window.history.go(-1); return false;">Back</div>
+        <div class="text-center font-bold">Tale</div>
+        <div class="opacity-0">gibrish</div>
+    </div>
+    <!-- Margin dude -->
+    <div class="opacity-0 my-3"></div>
+    <!-- Thread -->
+    {% include "thread/htmx/partials/_thread_section.html" with thread=thread %}
+    <!-- Comment section -->
+    {% include "thread/htmx/partials/_comment_section_for_thread_page.html" with direct_comments=direct_comments %}
+</div>

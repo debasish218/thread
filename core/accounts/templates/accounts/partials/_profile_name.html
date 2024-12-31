@@ -1,0 +1,63 @@
+{% load extra %}
+{% load thumbnail %}
+<div class="pt-7 px-4 relative z-30">
+    <div class="flex justify-between w-full">
+        <div>
+            <div class="font-bold text-xl">{{ u.first_name }} {{ u.last_name }}</div>
+            <div class="pt-1 text-sm">{{ u.username }}</div>
+        </div>
+        <div>
+            {% if u.myuser.profile_picture %}
+                <div class="avatar">
+                    <div class="w-16 sm:w-20 rounded-full">
+                        {% thumbnail u.myuser.profile_picture '80' as im %}
+                            <img src="{{ im.url }}"
+                                 srcset="{% thumbnail u.myuser.profile_picture '50' as im %}  {{ im.url }} {{ im.x }}w{% endthumbnail %}, {% thumbnail u.myuser.profile_picture '60' as im %}  {{ im.url }} {{ im.x }}w{% endthumbnail %}"
+                                 alt="Profile picture of {{ u.username }}"
+                                 sizes="100vw"
+                                 width="{{ im.width }}"
+                                 height="{{ im.height }}"
+                                 class="w-full rounded-full" />
+                        {% endthumbnail %}
+                    </div>
+                </div>
+            {% else %}
+                <div class="avatar placeholder">
+                    <div class="bg-neutral-focus text-neutral-content rounded-full w-16 sm:w-20">
+                        <span class="text-sm uppercase sm:text-base">{{ u.username|ecut }}</span>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    {% if u.myuser.bio %}<div class="pt-2">{{ u.myuser.bio }}</div>{% endif %}
+    <!-- Followers -->
+    <div class="text-sm text-neutral-content">
+        <!-- TODO Mutual profile avatars-->
+        <span class="hover:cursor-pointer hover:underline"
+              onclick="follow_modal.showModal()"
+              id="follower-count"
+              hx-indicator="#follow-popup-indicator"
+              hx-target="#follow-popup-container"
+              hx-get="{% url 'accounts:profile_followers' u.username %}">{{ u.followers.count }} follower{{ u.followers.count|pluralize }}</span>
+        {% if u.myuser.link %}
+            <a href="https://{{ u.myuser.link }}" target="_blank" class="pl-1">. {{ u.myuser.link }}</a>
+        {% endif %}
+    </div>
+    <!-- Btn -->
+    {% if user == u %}
+        <button onclick="profile_edit_modal.showModal()"
+                class="px-6 py-1 mt-3 cursor-pointer font-semibold text-base border-neutral-content border rounded-md">
+            Edit profile
+        </button>
+    {% else %}
+        <button {% if already_followed %} x-data="{text: 'Following'}" {% else %} x-data="{text: 'Follow'}" {% endif %}
+                x-text="text"
+                @click="text == 'Following' ? text = 'Follow' : text = 'Following'"
+                :class="text == 'Following' ? '' : 'bg-black text-white'"
+                hx-post="{% url 'accounts:follow_toggle' u.id %}"
+                hx-target="#follower-count"
+                class="px-6 py-1 mt-3 cursor-pointer font-semibold text-base border-neutral-content border rounded-md">
+        </button>
+    {% endif %}
+</div>
